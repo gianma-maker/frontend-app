@@ -49,38 +49,28 @@
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --ink: #0f2a1d;
+  --paper: #f6f1e4;
+  --table: #0b6b4a;
+  --ball: #ff6a1f;
+  --lime: #d7f23a;
+
+  --radius: 1rem;
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --card: #fffdf6;
+  --card-foreground: var(--ink);
+  --primary: var(--table);
+  --primary-foreground: #ffffff;
+  --secondary: var(--lime);
+  --secondary-foreground: var(--ink);
+  --muted: #ebe5d2;
+  --muted-foreground: #5b6b60;
+  --accent: var(--ball);
+  --accent-foreground: var(--ink);
+  --border: var(--ink);
+  --input: var(--ink);
+  --ring: var(--ball);
 }
 
 .dark {
@@ -122,8 +112,27 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
-  }
+  background-color: var(--paper);
+  background-image: radial-gradient(rgba(15, 42, 29, 0.08) 1.2px, transparent 1.2px);
+  background-size: 18px 18px;
+}
+
+.font-display {
+  font-family: "Bricolage Grotesque", system-ui, sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.font-mono {
+  font-family: "Space Mono", ui-monospace, monospace;
+}
+
+/* makapal na border + hard shadow */
+.pop {
+  border: 2px solid var(--ink);
+  border-radius: 1rem;
+  box-shadow: 5px 5px 0 0 var(--ink);
+}
   html {
     @apply font-sans;
   }
