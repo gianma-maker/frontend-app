@@ -41,7 +41,7 @@ export default function RegisterPage() {
       subtitle="New player"
       footer={
         <>
-          Already registered?{" "}
+          Already Registered?{" "}
           <Link href={CONFIG.ROUTES.LOGIN} className="font-bold underline decoration-[var(--ball)] decoration-2 underline-offset-4">
             Log in
           </Link>

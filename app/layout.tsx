@@ -1,8 +1,22 @@
 import "./globals.css";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Bricolage_Grotesque, Space_Mono } from "next/font/google";
 
-const geistSans = Geist({ subsets: ["latin"], variable: "--font-geist-sans" });
-const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono" });
+const display = Bricolage_Grotesque({
+  subsets: ["latin"],
+  weight: ["600", "800"],
+  variable: "--font-display",
+});
+
+const mono = Space_Mono({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-mono",
+});
+
+export const metadata = {
+  title: "Ping&Pong Tournament HQ",
+  description: "Table tennis tournament manager",
+};
 
 export default function RootLayout({
   children,
@@ -10,13 +24,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        suppressHydrationWarning
-        className={`${geistSans.variable} ${geistMono.variable} font-[family-name:var(--font-geist-sans)] antialiased`}
-      >
-        {children}
-      </body>
-    </html>
+    <html
+  lang="en"
+  suppressHydrationWarning
+  className={`${display.variable} ${mono.variable}`}
+>
+  <body>{children}</body>
+</html>
   );
 }

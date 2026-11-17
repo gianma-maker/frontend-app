@@ -63,7 +63,7 @@ const toInput = (field: Field, value: Row[string] | undefined) => {
 };
 
 const popButton =
-  "border-2 border-[var(--ink)] font-bold shadow-[3px_3px_0_0_var(--ink)] transition-all hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0_0_var(--ink)]";
+  "border-2 border-[var(--ink)] font-bold shadow-[3px_3px_0_0_var(--ink)] transition-all hover:-translate-y-0.5";
 
 export default function ResourcePage({ config }: { config: ResourceConfig }) {
   const { title, singular, endpoint, idKey, fields } = config;
@@ -84,7 +84,6 @@ export default function ResourcePage({ config }: { config: ResourceConfig }) {
   const [editingId, setEditingId] = useState<number | null>(null);
   const [form, setForm] = useState<Record<string, string>>(emptyForm);
 
-  // Used by Refresh button and after create/update/delete
   const fetchRows = useCallback(async () => {
     setLoading(true);
     setError("");
@@ -101,7 +100,6 @@ export default function ResourcePage({ config }: { config: ResourceConfig }) {
     }
   }, [endpoint, title]);
 
-  // Initial load (state is set only inside promise callbacks)
   useEffect(() => {
     let cancelled = false;
     apiClient<Row[]>(endpoint, { method: "GET", requiresAuth: true })
@@ -166,7 +164,6 @@ export default function ResourcePage({ config }: { config: ResourceConfig }) {
     setError("");
     setSuccess("");
 
-    // Build body: numbers -> Number, empty optional -> null (update) or omitted (create)
     const body: Record<string, string | number | null> = {};
     for (const f of fields) {
       const raw = form[f.key]?.trim() ?? "";
@@ -228,19 +225,25 @@ export default function ResourcePage({ config }: { config: ResourceConfig }) {
   return (
     <div className="space-y-6">
       {error && (
-        <div className="rounded-xl border-2 border-[var(--ink)] bg-red-100 p-3 text-sm font-medium text-red-800 shadow-[3px_3px_0_0_var(--ink)]">
+        <div
+          key={error}
+          className="anim-shake rounded-xl border-2 border-[var(--ink)] bg-red-100 p-3 text-sm font-medium text-red-800 shadow-[3px_3px_0_0_var(--ink)]"
+        >
           {error}
         </div>
       )}
       {success && (
-        <div className="rounded-xl border-2 border-[var(--ink)] bg-[var(--lime)] p-3 text-sm font-medium text-[var(--ink)] shadow-[3px_3px_0_0_var(--ink)]">
+        <div
+          key={success}
+          className="anim-pop rounded-xl border-2 border-[var(--ink)] bg-[var(--lime)] p-3 text-sm font-medium text-[var(--ink)] shadow-[3px_3px_0_0_var(--ink)]"
+        >
           {success}
         </div>
       )}
 
       {/* CREATE / UPDATE */}
       {isFormOpen && (
-        <Card className="pop">
+        <Card className="pop anim-rise">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <div>
               <CardTitle className="font-display text-2xl">
@@ -329,7 +332,7 @@ export default function ResourcePage({ config }: { config: ResourceConfig }) {
 
       {/* READ single */}
       {selected && (
-        <Card className="pop">
+        <Card className="pop anim-rise">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <div>
               <CardTitle className="font-display text-2xl">
@@ -374,7 +377,7 @@ export default function ResourcePage({ config }: { config: ResourceConfig }) {
       )}
 
       {/* LIST */}
-      <Card className="pop">
+      <Card className="pop anim-rise">
         <CardHeader className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <CardTitle className="font-display text-2xl">{title}</CardTitle>
@@ -396,7 +399,7 @@ export default function ResourcePage({ config }: { config: ResourceConfig }) {
             </Button>
             <Button
               onClick={openCreateForm}
-              className={`${popButton} bg-[var(--ball)] text-[var(--ink)] hover:bg-[var(--ball)]`}
+              className={`pulse-ring ${popButton} bg-[var(--ball)] text-[var(--ink)] hover:bg-[var(--ball)]`}
             >
               <Plus className="w-4 h-4 mr-2" />
               Create {singular}
@@ -415,7 +418,7 @@ export default function ResourcePage({ config }: { config: ResourceConfig }) {
                   <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
               </TableHeader>
-              <TableBody>
+              <TableBody className="stagger">
                 {loading ? (
                   <TableRow>
                     <TableCell
