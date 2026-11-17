@@ -51,6 +51,73 @@
   --input: var(--ink);
   --ring: var(--ball);
 }
+/* ===== COLOR THEMES ===== */
+:root {
+  --felt: #14398f;
+  --felt-dark: #0e2a6b;
+  --paddle: #d62828;
+}
+
+:root[data-theme="ocean"] {
+  --ink: #0b2540;
+  --paper: #eef5fb;
+  --table: #0f5c8a;
+  --ball: #ff7a59;
+  --lime: #8fe3ff;
+  --felt: #0f5c8a;
+  --felt-dark: #0a3f5f;
+  --paddle: #ff7a59;
+  --card: #fbfdff;
+  --muted: #dbe8f2;
+  --muted-foreground: #53697c;
+}
+
+:root[data-theme="sunset"] {
+  --ink: #3a1020;
+  --paper: #fff3e8;
+  --table: #c2410c;
+  --ball: #ffd23f;
+  --lime: #ff9fb2;
+  --felt: #9d174d;
+  --felt-dark: #6b0f35;
+  --paddle: #f97316;
+  --card: #fffaf4;
+  --muted: #f6e1cf;
+  --muted-foreground: #7a5a4a;
+}
+
+:root[data-theme="grape"] {
+  --ink: #23103d;
+  --paper: #f5f0ff;
+  --table: #5b21b6;
+  --ball: #ff5ea8;
+  --lime: #c4f24a;
+  --felt: #4c1d95;
+  --felt-dark: #321370;
+  --paddle: #ff5ea8;
+  --card: #fbf9ff;
+  --muted: #e6dcf8;
+  --muted-foreground: #66587f;
+}
+
+:root[data-theme="cherry"] {
+  --ink: #2b0f14;
+  --paper: #fdf1f1;
+  --table: #9f1239;
+  --ball: #ffb703;
+  --lime: #ffd6a5;
+  --felt: #7f1d1d;
+  --felt-dark: #5a1212;
+  --paddle: #ffb703;
+  --card: #fffafa;
+  --muted: #f5dcdc;
+  --muted-foreground: #7b5757;
+}
+
+
+body, aside, .pop {
+  transition: background-color 0.35s ease, color 0.35s ease, border-color 0.35s ease;
+}
 
 @layer base {
   * {
@@ -59,7 +126,7 @@
   body {
     @apply text-foreground;
     background-color: var(--paper);
-    background-image: radial-gradient(rgba(15, 42, 29, 0.08) 1.2px, transparent 1.2px);
+    background-image: radial-gradient(color-mix(in srgb, var(--ink) 8%, transparent) 1.2px, transparent 1.2px);
     background-size: 18px 18px;
   }
 }
@@ -205,11 +272,10 @@
 }
 .twinkle { animation: twinkle 2.4s ease-in-out infinite; }
 
-/* pumipintig na singsing sa Create button */
 @keyframes pulse-ring {
-  0%   { box-shadow: 3px 3px 0 0 var(--ink), 0 0 0 0 rgba(255, 106, 31, 0.6); }
-  70%  { box-shadow: 3px 3px 0 0 var(--ink), 0 0 0 14px rgba(255, 106, 31, 0); }
-  100% { box-shadow: 3px 3px 0 0 var(--ink), 0 0 0 0 rgba(255, 106, 31, 0); }
+  0%   { box-shadow: 3px 3px 0 0 var(--ink), 0 0 0 0 color-mix(in srgb, var(--ball) 60%, transparent); }
+  70%  { box-shadow: 3px 3px 0 0 var(--ink), 0 0 0 14px color-mix(in srgb, var(--ball) 0%, transparent); }
+  100% { box-shadow: 3px 3px 0 0 var(--ink), 0 0 0 0 color-mix(in srgb, var(--ball) 0%, transparent); }
 }
 
 .pulse-ring { animation: pulse-ring 2s ease-out infinite; }

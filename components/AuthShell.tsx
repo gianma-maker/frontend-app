@@ -1,4 +1,5 @@
 import { Arena, Ball, Paddle } from "@/components/TT";
+import ThemePicker from "@/components/ThemePicker";
 
 const DRIFTERS: { left: string; delay: string; size: number }[] = [
   { left: "12%", delay: "0s", size: 14 },
@@ -67,16 +68,12 @@ export default function AuthShell({
       </section>
 
       {/* KANAN = form */}
-      <section className="flex items-center justify-center p-6">
-        <div className="pop anim-pop w-full max-w-md bg-[var(--card)] p-8">
-          <p className="font-mono text-xs font-bold uppercase tracking-widest text-[var(--table)]">
-            ● {subtitle}
-          </p>
-          <h1 className="font-display mt-1 text-4xl">{title}</h1>
-          <div className="mt-6">{children}</div>
-          <div className="font-mono mt-6 text-center text-sm">{footer}</div>
-        </div>
-      </section>
+    <section className="relative flex items-center justify-center p-6">
+  <div className="absolute right-6 top-6">
+    <ThemePicker variant="light" />
+  </div>
+  {/* ...ang card mo, hindi nagbago */}
+</section>
     </div>
   );
 }

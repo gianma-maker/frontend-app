@@ -24,11 +24,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
+  <html
   lang="en"
   suppressHydrationWarning
   className={`${display.variable} ${mono.variable}`}
 >
+  <head>
+    <script
+      dangerouslySetInnerHTML={{
+        __html: `try{var t=localStorage.getItem("tt-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}`,
+      }}
+    />
+  </head>
   <body>{children}</body>
 </html>
   );

@@ -15,6 +15,7 @@ import { useAuthGuard } from "@/hooks/useAuthGuard";
 import { clearTokens } from "@/lib/auth";
 import { CONFIG } from "@/lib/config";
 import { Arena, Ball, Paddle } from "@/components/TT";
+import ThemePicker from "@/components/ThemePicker";
 
 const NAV = [
   { href: "/dashboard", label: "Tournaments", icon: Trophy },
@@ -131,6 +132,7 @@ export default function DashboardLayout({
           </nav>
 
           <div className="mt-auto space-y-5">
+            <ThemePicker variant="dark" />
             <div className="relative hidden md:block">
               <div className="net-bg h-6 rounded-sm border-y-4 border-white/90" />
               <span className="absolute -left-1 -top-2 h-10 w-1.5 rounded bg-[var(--ink)]" />
