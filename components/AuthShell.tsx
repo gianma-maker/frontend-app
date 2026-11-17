@@ -25,7 +25,6 @@ export default function AuthShell({
       <section className="relative hidden overflow-hidden bg-[var(--table)] p-10 text-white md:flex md:flex-col md:justify-between">
         <div className="net-bg pointer-events-none absolute inset-0 opacity-40" />
 
-        {/* maliliit na bolang lumulutang pataas */}
         {DRIFTERS.map((d, i) => (
           <span
             key={i}
@@ -58,8 +57,9 @@ export default function AuthShell({
             Tournament HQ
           </p>
           <h2 className="font-display anim-rise mt-2 text-6xl leading-[0.95]">
-            Serve. Rally. <span className="shine">Win.</span>
+            Serve. Rally.
             <br />
+            <span className="shine">Win.</span>
           </h2>
           <p className="font-mono mt-4 text-xs text-white/70">
             11 – 7 · 9 – 11 · 11 – 9
@@ -68,12 +68,20 @@ export default function AuthShell({
       </section>
 
       {/* KANAN = form */}
-    <section className="relative flex items-center justify-center p-6">
-  <div className="absolute right-6 top-6">
-    <ThemePicker variant="light" />
-  </div>
-  {/* ...ang card mo, hindi nagbago */}
-</section>
+      <section className="relative flex items-center justify-center p-6">
+        <div className="absolute right-6 top-6">
+          <ThemePicker variant="light" />
+        </div>
+
+        <div className="pop anim-pop w-full max-w-md bg-[var(--card)] p-8">
+          <p className="font-mono text-xs font-bold uppercase tracking-widest text-[var(--table)]">
+            ● {subtitle}
+          </p>
+          <h1 className="font-display mt-1 text-4xl">{title}</h1>
+          <div className="mt-6">{children}</div>
+          <div className="font-mono mt-6 text-center text-sm">{footer}</div>
+        </div>
+      </section>
     </div>
   );
 }
