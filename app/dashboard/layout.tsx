@@ -9,12 +9,15 @@ import {
   Medal,
   Swords,
   Trophy,
+  UserCircle,
   Users,
 } from "lucide-react";
 import { useAuthGuard } from "@/hooks/useAuthGuard";
 import { clearTokens } from "@/lib/auth";
 import { CONFIG } from "@/lib/config";
+import { useProfile } from "@/lib/profile";
 import { Arena, Ball, Paddle } from "@/components/TT";
+import Avatar from "@/components/Avatar";
 import ThemePicker from "@/components/ThemePicker";
 
 const NAV = [
@@ -24,6 +27,7 @@ const NAV = [
   { href: "/dashboard/registrations", label: "Registrations", icon: ClipboardList },
   { href: "/dashboard/matches", label: "Matches", icon: Swords },
   { href: "/dashboard/match-scores", label: "Scores", icon: Medal },
+  { href: "/dashboard/profile", label: "Profile", icon: UserCircle },
 ];
 
 const SIDE_DRIFTERS = [
@@ -65,6 +69,7 @@ export default function DashboardLayout({
   const router = useRouter();
   const pathname = usePathname();
   const { isChecking } = useAuthGuard({ requireAuth: true });
+  const { profile } = useProfile();
 
   const current = NAV.find((n) => n.href === pathname) ?? NAV[0];
 
@@ -78,7 +83,7 @@ export default function DashboardLayout({
   return (
     <div className="min-h-screen md:flex">
       {/* SIDEBAR */}
-      <aside className="relative overflow-hidden bg-[var(--table)] text-white md:sticky md:top-0 md:h-screen md:w-64 md:shrink-0">
+      <aside className="relative overflow-y-auto overflow-x-hidden bg-[var(--table)] text-white md:sticky md:top-0 md:h-screen md:w-64 md:shrink-0">
         {SIDE_DRIFTERS.map((d, i) => (
           <span
             key={i}
@@ -93,7 +98,7 @@ export default function DashboardLayout({
         ))}
         <div className="pointer-events-none absolute inset-2 rounded-xl border-2 border-white/40" />
 
-        <div className="relative flex flex-col gap-4 p-5 md:h-full md:gap-8 md:p-6">
+        <div className="relative flex flex-col gap-4 p-5 md:h-full md:gap-6 md:p-6">
           <div className="flex items-center gap-3">
             <span className="relative h-11 w-11 shrink-0">
               <Paddle className="anim-sway h-full w-full -rotate-12" />
@@ -131,9 +136,25 @@ export default function DashboardLayout({
             })}
           </nav>
 
+          {/* PROFILE CHIP */}
+          <Link
+            href="/dashboard/profile"
+            className="flex items-center gap-3 rounded-xl border-2 border-white/30 bg-white/10 p-2 transition-all hover:-translate-y-0.5 hover:bg-white/20"
+          >
+            <Avatar id={profile.avatar} size={36} />
+            <span className="min-w-0">
+              <span className="block truncate text-sm font-bold">
+                {profile.name || "My profile"}
+              </span>
+              <span className="font-mono block text-[10px] uppercase tracking-widest text-white/70">
+                View stats
+              </span>
+            </span>
+          </Link>
+
           <div className="mt-auto space-y-5">
             <ThemePicker variant="dark" />
-            <div className="relative hidden md:block">
+            <div className="relative hidden [@media(min-height:900px)]:block">
               <div className="net-bg h-6 rounded-sm border-y-4 border-white/90" />
               <span className="absolute -left-1 -top-2 h-10 w-1.5 rounded bg-[var(--ink)]" />
               <span className="absolute -right-1 -top-2 h-10 w-1.5 rounded bg-[var(--ink)]" />
@@ -179,8 +200,7 @@ export default function DashboardLayout({
               >
                 <path
                   d="M12 0 L14.5 9.5 L24 12 L14.5 14.5 L12 24 L9.5 14.5 L0 12 L9.5 9.5 Z"
-                  fill="#ff6a1f"
-                  stroke="#0f2a1d"
+                  style={{ fill: "var(--ball)", stroke: "var(--ink)" }}
                   strokeWidth="1.5"
                 />
               </svg>

@@ -330,4 +330,138 @@ button:not(:disabled):active {
     animation: none !important;
     transition: none !important;
   }
+
+  /* ===== 3D TABLE TENNIS ===== */
+.s3d-stage {
+  --rx: 56;
+  --rz: -34;
+  --unrot: rotateZ(calc(var(--rz) * -1deg)) rotateX(calc(var(--rx) * -1deg));
+  position: relative;
+  width: 100%;
+  perspective: 1500px;
+  perspective-origin: 50% 35%;
+}
+.s3d-scene {
+  position: absolute;
+  left: 50%;
+  top: 56%;
+  transform-style: preserve-3d;
+  transform: scale(var(--k)) rotateX(calc(var(--rx) * 1deg)) rotateZ(calc(var(--rz) * 1deg));
+  transition: transform 0.25s ease-out;
+}
+.s3d-scene * { transform-style: preserve-3d; }
+
+/* anino sa sahig */
+.s3d-floor {
+  position: absolute; inset: -30px -40px -50px -30px;
+  background: radial-gradient(closest-side, rgba(0,0,0,.45), transparent);
+  filter: blur(14px);
+  transform: translateZ(-2px);
+}
+
+/* ibabaw ng mesa */
+.s3d-top {
+  position: absolute; left: 0; top: 0;
+  border-radius: 6px;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.22), transparent 40%, rgba(0,0,0,.18)),
+    var(--felt);
+  box-shadow: inset 0 0 0 3px rgba(0,0,0,.25), 0 0 0 4px var(--felt-dark);
+}
+.s3d-border { position: absolute; inset: 12px; border: 3px solid rgba(255,255,255,.92); border-radius: 2px; }
+.s3d-mid { position: absolute; left: 50%; top: 12px; bottom: 12px; width: 3px; margin-left: -1.5px; background: rgba(255,255,255,.92); }
+.s3d-sheen {
+  position: absolute; inset: 0; border-radius: 6px;
+  background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,.28) 45%, transparent 60%);
+  background-size: 250% 100%;
+  animation: s3d-sheen 5s ease-in-out infinite;
+}
+@keyframes s3d-sheen { 0%,100% { background-position: 120% 0; } 50% { background-position: -20% 0; } }
+
+/* gilid ng mesa */
+.s3d-side { position: absolute; background: linear-gradient(var(--felt-dark), #05101f); }
+.s3d-front { left: 0; transform-origin: top; transform: translateZ(46px) rotateX(-90deg); }
+.s3d-right { top: 0; transform-origin: left; transform: translateZ(46px) rotateY(90deg); filter: brightness(.7); }
+
+/* paa */
+.s3d-leg { position: absolute; width: 16px; height: 16px; }
+.s3d-leg i { position: absolute; background: linear-gradient(#cfd6de, #6b7682); display: block; }
+.s3d-leg-f { left: 0; top: 16px; width: 16px; height: 46px; transform-origin: top; transform: rotateX(-90deg); }
+.s3d-leg-r { left: 16px; top: 0; width: 46px; height: 16px; transform-origin: left; transform: rotateY(90deg); filter: brightness(.7); }
+.s3d-leg { transform: translateZ(0); }
+
+/* net: nakatayo sa gitna */
+.s3d-net {
+  position: absolute;
+  transform-origin: 50% 100%;
+  transform: translateZ(46px) rotateZ(90deg) rotateX(-90deg);
+  background:
+    linear-gradient(rgba(255,255,255,.55) 1px, transparent 1px) 0 0 / 7px 7px,
+    linear-gradient(90deg, rgba(255,255,255,.55) 1px, transparent 1px) 0 0 / 7px 7px,
+    rgba(10,20,15,.55);
+}
+.s3d-net-tape { position: absolute; left: 0; right: 0; top: 0; height: 5px; background: #fff; }
+.s3d-post {
+  position: absolute; width: 6px; height: 6px; background: #d9dee3;
+  transform: translateZ(46px);
+}
+.s3d-post::after {
+  content: ""; position: absolute; inset: 0; background: #d9dee3;
+  transform-origin: bottom; transform: translateZ(44px);
+}
+
+/* billboard: laging nakaharap sa camera */
+.s3d-bill { position: absolute; left: 0; top: 0; transform-style: preserve-3d; }
+
+/* paddle */
+.s3d-swing { position: absolute; left: -32px; top: -42px; width: 64px; height: 116px; transform-origin: 50% 70%; animation: s3d-swing 3.6s ease-out infinite; }
+.s3d-swing-late { animation-delay: -1.8s; }
+@keyframes s3d-swing { 0% { transform: rotate(-26deg); } 6% { transform: rotate(22deg); } 14%,100% { transform: rotate(0); } }
+.s3d-blade {
+  position: absolute; left: 0; top: 0; width: 64px; height: 64px; border-radius: 50%;
+  background: radial-gradient(circle at 34% 28%, #e8c48e, #b98746 60%, #7a5326);
+  box-shadow: 0 5px 8px rgba(0,0,0,.35), inset 0 0 0 2px rgba(0,0,0,.3);
+}
+.s3d-rubber {
+  position: absolute; inset: 4px; border-radius: 50%;
+  background:
+    radial-gradient(circle at 32% 26%, rgba(255,255,255,.55), transparent 32%),
+    radial-gradient(circle, var(--paddle), color-mix(in srgb, var(--paddle) 55%, black));
+  box-shadow: inset 0 -5px 8px rgba(0,0,0,.3);
+}
+.s3d-handle {
+  position: absolute; left: 24px; top: 56px; width: 16px; height: 58px; border-radius: 4px 4px 9px 9px;
+  background: linear-gradient(90deg, #7a5326, #e3b571 45%, #8a6030);
+  box-shadow: 0 4px 6px rgba(0,0,0,.35);
+}
+
+/* bola */
+.s3d-ball-x { position: absolute; left: 0; top: 0; transform: translate3d(-10px, 120px, 0); animation: s3d-x 1.8s linear infinite alternate; }
+@keyframes s3d-x { from { transform: translate3d(-10px, 120px, 0); } to { transform: translate3d(430px, 120px, 0); } }
+.s3d-ball-z { position: absolute; left: 0; top: 0; animation: s3d-z 1.8s linear infinite alternate; }
+@keyframes s3d-z {
+  0%   { transform: translateZ(100px); animation-timing-function: cubic-bezier(.4,0,1,1); }
+  20%  { transform: translateZ(57px);  animation-timing-function: cubic-bezier(0,0,.6,1); }
+  50%  { transform: translateZ(140px); animation-timing-function: cubic-bezier(.4,0,1,1); }
+  80%  { transform: translateZ(57px);  animation-timing-function: cubic-bezier(0,0,.6,1); }
+  100% { transform: translateZ(100px); }
+}
+.s3d-ball {
+  position: absolute; left: -12px; top: -12px; width: 24px; height: 24px; border-radius: 50%;
+  background: radial-gradient(circle at 32% 28%, #fff 0 9%, color-mix(in srgb, var(--ball) 70%, white) 20%, var(--ball) 55%, color-mix(in srgb, var(--ball) 45%, black));
+  box-shadow: 0 3px 5px rgba(0,0,0,.35);
+}
+.s3d-ball-shadow {
+  position: absolute; left: -11px; top: -7px; width: 22px; height: 14px; border-radius: 50%;
+  background: rgba(0,0,0,.55); filter: blur(3px);
+  transform: translateZ(47px);
+  animation: s3d-shadow 1.8s linear infinite alternate;
+}
+@keyframes s3d-shadow {
+  0%   { opacity: .25; scale: .7; }
+  20%  { opacity: .65; scale: 1.1; }
+  50%  { opacity: .18; scale: .5; }
+  80%  { opacity: .65; scale: 1.1; }
+  100% { opacity: .25; scale: .7; }
+}
 }
