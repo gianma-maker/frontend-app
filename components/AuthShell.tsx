@@ -57,7 +57,7 @@ export default function AuthShell({
             Tournament HQ
           </p>
           <h2 className="font-display anim-rise mt-2 text-6xl leading-[0.95]">
-            Serve. Rally. Win. <span className="shine">Win.</span>
+            Serve. Rally. <span className="shine">Win.</span>
             <br />
           </h2>
           <p className="font-mono mt-4 text-xs text-white/70">
