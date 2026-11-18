@@ -4,9 +4,12 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
   ClipboardList,
+  Crown,
+  Home,
   LogOut,
   MapPin,
   Medal,
+  Radio,
   Swords,
   Trophy,
   UserCircle,
@@ -21,12 +24,15 @@ import Avatar from "@/components/Avatar";
 import ThemePicker from "@/components/ThemePicker";
 
 const NAV = [
+  { href: "/dashboard/home", label: "Home", icon: Home },
   { href: "/dashboard", label: "Tournaments", icon: Trophy },
   { href: "/dashboard/venues", label: "Venues", icon: MapPin },
   { href: "/dashboard/players", label: "Players", icon: Users },
   { href: "/dashboard/registrations", label: "Registrations", icon: ClipboardList },
   { href: "/dashboard/matches", label: "Matches", icon: Swords },
+  { href: "/dashboard/live", label: "Live Score", icon: Radio },
   { href: "/dashboard/match-scores", label: "Scores", icon: Medal },
+  { href: "/dashboard/results", label: "Results", icon: Crown },
   { href: "/dashboard/profile", label: "Profile", icon: UserCircle },
 ];
 
@@ -71,7 +77,7 @@ export default function DashboardLayout({
   const { isChecking } = useAuthGuard({ requireAuth: true });
   const { profile } = useProfile();
 
-  const current = NAV.find((n) => n.href === pathname) ?? NAV[0];
+  const current = NAV.find((n) => n.href === pathname) ?? NAV[1];
 
   const handleLogout = () => {
     clearTokens();
@@ -98,7 +104,7 @@ export default function DashboardLayout({
         ))}
         <div className="pointer-events-none absolute inset-2 rounded-xl border-2 border-white/40" />
 
-        <div className="relative flex flex-col gap-4 p-5 md:h-full md:gap-6 md:p-6">
+        <div className="relative flex flex-col gap-4 p-5 md:min-h-full md:gap-5 md:p-6">
           <div className="flex items-center gap-3">
             <span className="relative h-11 w-11 shrink-0">
               <Paddle className="anim-sway h-full w-full -rotate-12" />
@@ -120,7 +126,7 @@ export default function DashboardLayout({
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`wiggle-hover flex items-center gap-3 whitespace-nowrap rounded-xl border-2 px-3 py-2 text-sm font-bold transition-all ${
+                  className={`wiggle-hover flex items-center gap-3 whitespace-nowrap rounded-xl border-2 px-3 py-1.5 text-sm font-bold transition-all ${
                     active
                       ? "border-[var(--ink)] bg-[var(--ball)] text-[var(--ink)] shadow-[3px_3px_0_0_var(--ink)]"
                       : "border-transparent text-white/85 hover:translate-x-1 hover:border-white/40 hover:bg-white/10"
@@ -152,14 +158,8 @@ export default function DashboardLayout({
             </span>
           </Link>
 
-          <div className="mt-auto space-y-5">
+          <div className="mt-auto space-y-4">
             <ThemePicker variant="dark" />
-            <div className="relative hidden [@media(min-height:900px)]:block">
-              <div className="net-bg h-6 rounded-sm border-y-4 border-white/90" />
-              <span className="absolute -left-1 -top-2 h-10 w-1.5 rounded bg-[var(--ink)]" />
-              <span className="absolute -right-1 -top-2 h-10 w-1.5 rounded bg-[var(--ink)]" />
-            </div>
-
             <button
               onClick={handleLogout}
               className="flex w-full items-center justify-center gap-2 rounded-xl border-2 border-[var(--ink)] bg-[var(--lime)] px-3 py-2 text-sm font-bold text-[var(--ink)] shadow-[3px_3px_0_0_var(--ink)] transition-all"
@@ -181,7 +181,6 @@ export default function DashboardLayout({
             <WaveTitle key={current.label} text={current.label} />
           </div>
 
-          {/* mesa, kapantay ng pamagat */}
           <div className="relative hidden w-[420px] lg:block">
             <div className="animate-pulse pointer-events-none absolute inset-x-8 top-6 bottom-0 rounded-full bg-[var(--ball)]/20 blur-2xl" />
             {SPARKLES.map((s, i) => (

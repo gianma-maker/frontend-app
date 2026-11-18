@@ -54,7 +54,6 @@ export default function ProfilePage() {
     };
   }, []);
 
-  // aling player ako? (naka-link sa user, o pinili ko)
   const me = useMemo(() => {
     const uid = getUserId();
     return (
@@ -101,7 +100,6 @@ export default function ProfilePage() {
         </div>
       )}
 
-      {/* PLAYER CARD */}
       <div className="pop anim-rise bg-[var(--card)] p-6">
         <div className="flex flex-wrap items-center gap-6">
           <Avatar id={profile.avatar} size={104} className="anim-bounce" />
@@ -113,7 +111,7 @@ export default function ProfilePage() {
             <p className="font-mono mt-1 text-xs text-[var(--muted-foreground)]">
               {me
                 ? `Player #${me.player_id} · ${me.ranking_points ?? 0} ranking pts`
-                : "Walang naka-link na player"}
+                : "No linked player"}
             </p>
           </div>
 
@@ -159,7 +157,7 @@ export default function ProfilePage() {
       {/* AVATAR PICKER */}
       <div className="pop anim-rise bg-[var(--card)] p-6">
         <div className="mb-4 flex items-center justify-between">
-          <h3 className="font-display text-2xl">Pumili ng avatar</h3>
+          <h3 className="font-display text-2xl">Select Avatar</h3>
           {saved && (
             <span className="anim-pop font-mono flex items-center gap-1 rounded-full border-2 border-[var(--ink)] bg-[var(--lime)] px-2.5 py-0.5 text-xs font-bold">
               <Check className="h-3 w-3" /> Saved
@@ -214,7 +212,7 @@ export default function ProfilePage() {
         </div>
         <div>
           <label className="font-mono mb-1.5 block text-xs font-bold uppercase tracking-wider">
-            Ako si (Player)
+            My Name is (Player)
           </label>
           <select
             value={me?.player_id ?? ""}
@@ -224,7 +222,7 @@ export default function ProfilePage() {
             }}
             className="h-[42px] w-full rounded-xl border-2 border-[var(--ink)] bg-white px-3 text-sm outline-none focus:shadow-[3px_3px_0_0_var(--ball)]"
           >
-            <option value="">— Piliin —</option>
+            <option value="">— SELECT —</option>
             {players.map((p) => (
               <option key={p.player_id} value={p.player_id}>
                 #{p.player_id} {p.first_name} {p.last_name}
@@ -237,15 +235,15 @@ export default function ProfilePage() {
       {/* RECENT MATCHES */}
       <div className="pop anim-rise bg-[var(--card)] p-6">
         <h3 className="font-display mb-4 flex items-center gap-2 text-2xl">
-          <Swords className="h-5 w-5" /> Huling laban
+          <Swords className="h-5 w-5" /> Last Match
         </h3>
         {!me ? (
           <p className="font-mono text-sm text-[var(--muted-foreground)]">
-            Piliin muna kung sino ka sa itaas para makita ang record mo.
+            Select who you are above to view your record.
           </p>
         ) : stats.recent.length === 0 ? (
           <p className="font-mono text-sm text-[var(--muted-foreground)]">
-            Wala pang tapos na laban. Serve the first one! 🏓
+            No finished matches yet. Serve the first one! 🏓
           </p>
         ) : (
           <ul className="stagger space-y-2">
